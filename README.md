@@ -1,6 +1,9 @@
 # Capistrano DB sync
 Tasks for database sync a staging and a development environment from a production database.
 
+## Supported DB
+Now this gem are supporting Postgresql.
+
 ## Installation
 Add this line to your application's Gemfile:
 
