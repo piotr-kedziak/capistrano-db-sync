@@ -76,8 +76,15 @@ During sync on a staging environment instances this gem will do following steps:
 ## Usage
 After installation, you can run a Capistrano task on any of yours environments stages:
 ```bash
-cap production
+cap production db:dump_production     # Create a dump from a production database
+cap production db:load_into_localhost # Load a dump into a localhost database
+cap production db:load_into_staging   # Load a dump into a staging database
+cap production db:sync_all            # Synchronize database on a staging and a localhost
+cap production db:sync_dev            # Synchronize development database on a localhost
+cap production db:sync_staging        # Synchronize database on a staging instance
 ```
+
+Remeber to use stage `production`!
 
 ## Contributing
 1. Fork it
