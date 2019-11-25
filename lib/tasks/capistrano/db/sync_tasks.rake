@@ -1,6 +1,6 @@
 namespace :load do
   task :defaults do
-    set :db_sync_dumps_path,                -> { 'tmp/app_db_dumps' }
+    set :db_sync_dumps_path,                -> { "#{shared_path}/db_dumps" }
     set :db_sync_download_path,             -> { './tmp' }
     set :db_sync_staging_before_sync_tasks, -> { 'puma:stop' }
     set :db_sync_staging_after_sunc_tasks,  -> { 'puma:start' }
