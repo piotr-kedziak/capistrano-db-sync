@@ -15,7 +15,7 @@ namespace :db do
       execute "chmod go+rw #{dump_file}"
 
       db        = load_db_config :production
-      db_name   = "postgresql://#{db['username']}:#{db['password']}@localhost:5432/#{db['database']}"
+      db_name   = "postgresql://#{db['username']}:#{db['password']}@#{db['host']}:5432/#{db['database']}"
       dump_cmd  = "pg_dump --clean --no-owner --no-privileges --dbname=#{db_name} -f #{dump_file}"
 
       within shared_path do
@@ -60,7 +60,7 @@ namespace :db do
   desc 'Load a dump into a localhost database'
   task :load_into_localhost do
     db        = load_db_config :development
-    db_name   = "postgresql://#{db['username']}:#{db['password']}@localhost:5432/#{db['database']}"
+    db_name   = "postgresql://#{db['username']}:#{db['password']}@#{db['host']}:5432/#{db['database']}"
 
     run_locally do
       execute 'bundle exec rails db:drop'
