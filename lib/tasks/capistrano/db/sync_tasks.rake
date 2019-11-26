@@ -20,8 +20,14 @@ namespace :db do
 
       execute "sudo su - postgres -c 'touch #{dump_file}'"
       execute "sudo su - postgres -c '#{dump_cmd}'"
-      download! dump_file, local_backup_file
-      execute "rm -f #{dump_file}"
+      execute "gzip #{dump_file}"
+      download! compressed_dump_file, downloaded_compressed_file
+      execute "rm -f #{compressed_dump_file}"
+    end
+    run_locally do
+      with rails_env: :development do
+        execute "gzip -df #{downloaded_compressed_file}"
+      end
     end
   end
 
@@ -96,6 +102,14 @@ namespace :db do
 
   def dump_file
     @dump_file ||= "#{fetch(:db_sync_dumps_path)}/dump-#{Time.now.utc.strftime('%Y-%m-%d-%H:%M:%S')}.sql"
+  end
+
+  def compressed_dump_file
+    @compressed_dump_file ||= "#{dump_file}.gz"
+  end
+
+  def downloaded_compressed_file
+    @downloaded_compressed_file ||= "#{local_backup_file}.gz"
   end
 
   def local_backup_file
