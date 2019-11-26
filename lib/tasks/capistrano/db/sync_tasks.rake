@@ -18,11 +18,10 @@ namespace :db do
       db_name   = "postgresql://#{db['username']}:#{db['password']}@#{db['host']}:5432/#{db['database']}"
       dump_cmd  = "pg_dump --clean --no-owner --no-privileges --dbname=#{db_name} -f #{dump_file}"
 
-      # within shared_path do
-        execute "sudo su - postgres -c 'touch #{dump_file}'"
-        execute "sudo su - postgres -c '#{dump_cmd}'"
-        download! dump_file, local_backup_file
-      # end
+      execute "sudo su - postgres -c 'touch #{dump_file}'"
+      execute "sudo su - postgres -c '#{dump_cmd}'"
+      download! dump_file, local_backup_file
+      execute "rm -f #{dump_file}"
     end
   end
 
